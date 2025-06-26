@@ -1,5 +1,3 @@
-Sergio Ávila Torres - 1636391, Ramon Ribas Casado - 1531775
-
 <img src="/assets/Trackbot.png" align="right" width="250" alt="header pic" />
 
 # TRACKBOT
@@ -48,7 +46,17 @@ Durant el desenvolupament de la arquitectura, desenvoluparem els següents diagr
 
 ## 4. Algorismes
 
-*(Explicació dels algoritmes utilitzats)*
+**master.ino**
+
+L’ESP32 actua com a cervell central: primer es connecta en mode estació a la xarxa Wi-Fi del dispositiu objectiu, després dins del bucle principal llegeix periòdicament el RSSI amb `WiFi.RSSI()` o `WiFi.scanNetworks()`, acumula diverses mostres per calcular-ne una mitjana més estable i finalment envia aquest valor mitjà pels ports UART als dos “esclaus” (moviment i ultrasons). A més, implementa un protocol molt senzill de comandes de text per sol·licitar a cada mòdul la dada corresponent i llegir la resposta per sèrie.
+
+**slave\_movement.ino**
+
+Aquest mòdul rep via UART el RSSI mitjà enviat pel master i aplica un control de llindar,  per decidir si avançar o girar i així maximitzar la senyal. Tot i que existeix `getRSSI()` per mesurar localment i fer la mitjana de milers de lectures de `WiFi.RSSI()`, normalment s’usa el valor centralitzat. Amb aquest RSSI el compara amb un llindar desitjat i ajusta la velocitat de les rodes (via PWM amb LEDC) per corregir el rumb: més senyal → recte; menys senyal → girs de cerca.
+
+**slave\_us.ino**
+
+Aquí es gestiona el sensor HC-SR04 per mesurar obstacles: el mòdul dispara un trig (`digitalWrite(TRIG_PIN, HIGH)` molt breu), mesura la durada de l’eco amb `pulseIn(ECHO_PIN, HIGH)` i converteix aquest temps en distància (cm) amb la fórmula `distance = duration * 0.0343 / 2`. Després envia la distància pel UART al mòdul de moviment, que l’integra a la seva lògica per aturar-se o esquivar obstacles. Així el robot segueix la font Wi-Fi i, alhora, evita col·lisions.
 
 ## 5. Models 3D
 
