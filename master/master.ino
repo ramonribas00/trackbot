@@ -1,10 +1,10 @@
 #include <HardwareSerial.h>
 #include <WiFi.h>
-const char* ssid     = "POCO X6 Pro 5G";
-const char* password = "xkda3agwxrtfzgw";
+const char* ssid     = "X";
+const char* password = "Y";
 HardwareSerial SerialA(1);  // UART1
 HardwareSerial SerialB(2);  // UART2
-
+long long rssi_mitja;
 void setup() {
   Serial.begin(115200);
   SerialA.begin(115200, SERIAL_8N1, 18, 19);  // RX, TX
@@ -30,19 +30,44 @@ void setup() {
 }
 
 void loop() {
-  int* A = rssi();
+  float rssi_mestre = getRSSI();           // RSSI del propi ESP32 (client WiFi)
+  int* rssi_vals = rssi();                 // RSSI dels esclaus per UART
+  int rssiA = rssi_vals[0];
+  int rssiB = rssi_vals[1];
 
-  move('A', 10);
-  delay(2500);
-  move('D', 2000);
-  delay(2500);
-  move('S', 0);
-  delay(2500);
+  // Si cap valor no és vàlid, no fem res
+  if (rssiA == -999 && rssiB == -999) {
+    Serial.println("Cap RSSI vàlid dels esclaus.");
+    delay(3000);
+    return;
+  }
 
-  
+  int millorRSSI = max(rssiA, rssiB);
+  Serial.printf("RSSI mestre: %.2f | Millor RSSI esclau: %d\n", rssi_mestre, millorRSSI);
 
-  delay(10000);
+  if (rssi_mestre > millorRSSI) {
+    Serial.println("RSSI mestre és millor → continuar endavant.");
+    move('A', 200);
+    delay(1000);
+    move('S', 0);
+  } else {
+    if (rssiA > rssiB) {
+      Serial.println("Millor RSSI esclau: A → gira esquerra i avança.");
+      move('I', 100);
+      delay(1000);
+    } else {
+      Serial.println("Millor RSSI esclau: B → gira dreta i avança.");
+      move('D', 100);
+      delay(1000);
+    }
+    move('A', 200);
+    delay(1000);
+    move('S', 0);
+  }
+
+  delay(3000);  // Espera abans del següent cicle
 }
+
 void move(char mov, int vel){ //'A' endevant ; 'D' rotar dreta ; 'I' rotat esquerra ; 'S' Stop
   String respostaB;
   String comanda = String(mov) + " " + String(vel)+'\n';
@@ -93,3 +118,14 @@ float dist(){
   }
   return respostaA.toFloat();
 }
+float getRSSI() {
+  rssi_mitja = 0;
+  int i;
+  for (i = 0; i < 10000; i++) {
+    rssi_mitja += WiFi.RSSI();
+  }
+  float avg = rssi_mitja / (float)i;
+  Serial.printf("RSSI promedio: %ld dBm\n", avg);
+  return avg;
+}
+
