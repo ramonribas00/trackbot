@@ -42,7 +42,7 @@ Durant el desenvolupament de la arquitectura, desenvoluparem els següents diagr
 
 ### 3.2 Diagrama de mòduls SW
 
-*(Contingut del diagrama de mòduls de programari)*
+<img src="/assets/DiagramaSW.png" alt="Diagrama SW" width="400" />
 
 ## 4. Algorismes
 
