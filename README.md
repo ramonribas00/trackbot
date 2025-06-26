@@ -19,19 +19,26 @@
 
 ## 1. Què és el Trackbot?
 
-*(Descripció del Trackbot)*
+Robot mòbil amb tres mòduls ESP32 disposats en tríada per mesurar el RSSI des de diferents angles; mitjançant càlcul de gradients de senyal, ajusta el seu desplaçament en temps real per acostar-se al dispositiu emissor Wi-Fi.
 
 ## 2. Componenets
 
-*(Llista de components necessaris)*
+El componenets que hem utilitzat han estat:
+
+- x3 ESP32 --> Captar intensitats RSSI
+- x2 HC-SR04 --> Sensor de proximitat (ultrasons)
+- L9110 --> Controladora
+- Portapiles --> 3 piles AAA
+- x2 Motor DC N20
+- Mini-Protoboard
 
 ## 3. Diagrames
 
-*(Introducció als diagrames)*
+Durant el desenvolupament de la arquitectura, desenvoluparem els següents diagrames:
 
 ### 3.1 Diagrama Fritzing
 
-*(Contingut del diagrama Fritzing)*
+<img src="/assets/DiagramaFritzing.jpg" alt="Diagrama Fritzing" width="400" />
 
 ### 3.2 Diagrama de mòduls SW
 
