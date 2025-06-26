@@ -13,8 +13,7 @@ const char* ssid     = "X";
 const char* password = "Y";
 
 // UART para comandos RSSI
-typedef HardwareSerial UARTRSSI;
-UARTRSSI slave(1);
+typedef HardwareSerial slave(1);
 
 // Pines motor A (izquierdo)
 const int IN2_A = 25;
