@@ -30,17 +30,13 @@ const int CH_B = 1;
 const int PWM_FREQ = 5000;   // 5 kHz
 const int PWM_RES  = 10;     // 10 bits (0-1023)
 
-// Pines sensor ultrasónico
-#define TRIG_PIN 5
-#define ECHO_PIN 18
-#define IR_PIN   19
 
-long rssi_mitja = 0;
+long long rssi_mitja = 0;
 
 void setup() {
   // Serial
   Serial.begin(115200);
-  slave.begin(9600, SERIAL_8N1, 16, 17);  // RX=16, TX=17
+  slave.begin(115200, SERIAL_8N1, 18, 19);  // RX=19, TX=18
   Serial.println("Inicio robot combinado con RSSI");
 
   // Wi-Fi
@@ -94,31 +90,39 @@ void loop() {
   // Chequear comandos UART para RSSI
   if (slave.available()) {
     String cmd = slave.readStringUntil('\n');
-    cmd.trim();
     Serial.print("Comando recibido: "); Serial.println(cmd);
     if (cmd == "rssi") {
       if (WiFi.status() == WL_CONNECTED) {
-        long val = getRSSI();
+        float val = getRSSI();
         slave.println(val);
       } else {
         Serial.println("Wi-Fi no conectado");
       }
-    }else{
-      
-    }
-    // Más comandos pueden añadirse aquí
-  }
+    } else {
+      int espai = cmd.indexOf(' ');
+      if (espai != -1 ) {
+        char moviment = cmd.charAt(0);
+        int vel = cmd.substring(espai + 1).toInt();
 
-  // Prueba de movimientos
-  // avanzar(1023);
-  // delay(500);
-  // avanzar(512);
-  // delay(1500);
-  // parar(); delay(1000);
-  // rotarDerecha(800); delay(7000);
-  // parar(); delay(1000);
-  //rotarIzquierda(800); delay(7000);
-  // parar(); delay(3000);
+        Serial.print("Moviment rebut -> ");
+        Serial.print(moviment);
+        Serial.print(", ");
+        Serial.println(vel);
+        switch(moviment){
+          case 'A':
+            avanzar(vel); delay(1000); break;
+          case 'D':
+            rotarDerecha(vel); delay(1000); break;
+          case 'I':
+            rotarIzquierda(vel); delay(1000); break;
+          case 'S':
+            parar(); break;
+        }
+      }
+    }
+
+  }
+  
 }
 
 // Funciones de movimiento
@@ -160,13 +164,13 @@ void parar() {
 }
 
 // Medición RSSI promedio
-long getRSSI() {
+float getRSSI() {
   rssi_mitja = 0;
   int i;
-  for (i= 0; i < 10000; i++) {
+  for (i = 0; i < 10000; i++) {
     rssi_mitja += WiFi.RSSI();
   }
-  long avg = rssi_mitja / (i+1);
+  float avg = rssi_mitja / (float)i;
   Serial.printf("RSSI promedio: %ld dBm\n", avg);
   return avg;
 }
