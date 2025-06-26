@@ -7,7 +7,7 @@ const char* password = "Y";
 #define TRIG_PIN 12      // HC-SR04 trig
 #define ECHO_PIN 14      // HC-SR04 echo
 
-long rssi_mitja = 0;
+long long rssi_mitja = 0;
 
 void setup() {
 
@@ -40,7 +40,7 @@ void loop() {
     Serial.println(rebut);
     if(rebut == "rssi"){
       if (WiFi.status() == WL_CONNECTED) {
-        long rssiRead = getRSSI();
+        float rssiRead = getRSSI();
         slave.println(rssiRead);
       } else {
         Serial.println("Sense Wi-Fi");
@@ -54,17 +54,17 @@ void loop() {
   }
 }
 
-long getRSSI(){
+float getRSSI(){
   if (WiFi.status() == WL_CONNECTED) {
     rssi_mitja = 0;
     int i;
-    for(i= 0; i!=10000;i++){
+    for(i= 0; i<10000;i++){
       long rssi = WiFi.RSSI();       // dBm (−30 molt fort, −90 molt fluix)
       rssi_mitja += rssi;
       
     }
     
-    long mitjana = rssi_mitja / (i+1);
+    long mitjana = rssi_mitja / (float)i;
     Serial.printf("RSSI mitjana: %ld dBm\n\n", mitjana);
       
     return mitjana;
