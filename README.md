@@ -74,8 +74,12 @@ En aquest apartat mostrem algunes imatges dels models implementats, molt importa
 
 ## 6. Imatges Trackbot
 
-*(Galeria d’imatges del Trackbot)*
+<img src="/assets/IMG_4149.png" alt="A1" width="300" />
+<img src="/assets/IMG_4146.png" alt="A2" width="300" />
+<img src="/assets/IMG_4144.png" alt="A3" width="300" />
 
 ## 7. Conclusions
 
 Aquest projecte ens ha tret de la nostra zona de confort i ens ha servit per treballar amb noves eines com la impressora 3D per fabricar els suports dels motors i la màquina de tall per làser per construir l’estructura. Realment, tot i no ser de la mencio de computació, hem vist una cara de la especialització força interessant, i que ens ha aportat coneixements d'algorismes i componenets essencial pel futr. Finalment, és una llàstima que els motors no hagin tingut prou potència per moure amb eficàcia el robot, perquè de ser així hauria obtés els resultats esperats.
+
+VIDEO ROBOT: https://youtu.be/orLypsw5CK8
