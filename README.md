@@ -60,15 +60,17 @@ Aquí es gestiona el sensor HC-SR04 per mesurar obstacles: el mòdul dispara un 
 
 ## 5. Models 3D
 
-*(Presentació dels models 3D)*
-
+En aquest apartat mostrem algunes imatges dels models implementats, molt importants alhora d'utilitzar l'eina de tall làser.
 ### 5.1 Tinkercad
 
-*(Enllaç o descripció del model a Tinkercad)*
+<img src="/assets/TINKER1.png" alt="T1" width="300" />
+<img src="/assets/TINKER2.png" alt="T2" width="300" />
+<img src="/assets/TINKER3.png" alt="T3" width="300" />
+
 
 ### 5.2 Inkscape
 
-*(Detall i descàrrega dels fitxers Inkscape)*
+<img src="/assets/INK.png" alt="INK" width="400" />
 
 ## 6. Imatges Trackbot
 
@@ -76,4 +78,4 @@ Aquí es gestiona el sensor HC-SR04 per mesurar obstacles: el mòdul dispara un 
 
 ## 7. Conclusions
 
-*(Reflexions i conclusions finals)*
+Aquest projecte ens ha tret de la nostra zona de confort i ens ha servit per treballar amb noves eines com la impressora 3D per fabricar els suports dels motors i la màquina de tall per làser per construir l’estructura. Realment, tot i no ser de la mencio de computació, hem vist una cara de la especialització força interessant, i que ens ha aportat coneixements d'algorismes i componenets essencial pel futr. Finalment, és una llàstima que els motors no hagin tingut prou potència per moure amb eficàcia el robot, perquè de ser així hauria obtés els resultats esperats.
