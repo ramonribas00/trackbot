@@ -1,3 +1,6 @@
+Sergio Ávila Torres - 1636391
+Ramon Ribas Casado - 1531775
+
 <img src="/assets/Trackbot.png" align="right" width="250" alt="header pic" />
 
 # TRACKBOT
